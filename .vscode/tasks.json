@@ -1,0 +1,8 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "serve", "type": "shell", "command": "npx live-server pages --port=4173", "problemMatcher": [] },
+    { "label": "build", "type": "shell", "command": "mkdir -p dist && cp -r pages assets dist/ && cp pages/contrato-do-sim.html dist/ && [ -f CNAME ] && cp CNAME dist/ || true", "problemMatcher": [] },
+    { "label": "deploy", "type": "shell", "command": "npm run build && echo 'Deploy pronto via GitHub Actions (Pages)'", "problemMatcher": [] }
+  ]
+}

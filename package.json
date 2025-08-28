@@ -1,0 +1,13 @@
+{
+  "name": "lichtara-site",
+  "private": true,
+  "scripts": {
+    "dev": "npx live-server pages --port=4173",
+    "build": "mkdir -p dist && cp -r pages assets dist/ && cp pages/contrato-do-sim.html dist/ && [ -f CNAME ] && cp CNAME dist/ || true",
+    "pdf": "node scripts/make-pdf.mjs",
+    "check": "echo 'OK'"
+  },
+  "devDependencies": {
+    "puppeteer": "^22.15.0"
+  }
+}
