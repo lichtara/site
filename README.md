@@ -23,4 +23,9 @@ Deploy (GitHub Pages)
 Rotas úteis
 - Página: `/pages/contrato-do-sim.html` → publicado como `https://<user>.github.io/<repo>/pages/contrato-do-sim.html`
 - Dica: adicione um `pages/index.html` se quiser uma home com links
+
+Sitemap e Robots
+- `sitemap.xml` é gerado por `scripts/make-sitemap.mjs` após o build (postbuild).
+- `robots.txt` é gerado dinamicamente por `scripts/make-robots.mjs` com base em `CNAME` ou `GITHUB_REPOSITORY` (não manter um `robots.txt` estático no repositório).
+- Canonical e OG/Twitter do contrato são ajustados para o domínio/subpath correto por `scripts/fix-urls.mjs` no postbuild.
 # site
