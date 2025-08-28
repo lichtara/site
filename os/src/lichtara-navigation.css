@@ -1,0 +1,434 @@
+/* =================================================
+   LICHTARA NAVIGATION - Breadcrumbs e Favoritos
+   ================================================= */
+
+/* Breadcrumb */
+.lichtara-breadcrumb {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+
+.breadcrumb-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.breadcrumb-icon {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.breadcrumb-path {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.breadcrumb-item {
+    color: #64748b;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.breadcrumb-item:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.breadcrumb-item.active {
+    color: #1e293b;
+    font-weight: 600;
+    background: rgba(74, 222, 128, 0.1);
+}
+
+.breadcrumb-separator {
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+/* Botão de favoritos no breadcrumb */
+.favorites-toggle {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.favorites-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+.favorites-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+
+/* Botões de favoritar em seções */
+.favorite-button {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.favorite-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.favorite-button.favorited {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border-color: #f59e0b;
+}
+
+/* Painel de favoritos */
+.lichtara-favorites-panel {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    width: 350px;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 100px);
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+.lichtara-favorites-panel.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+.favorites-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 500px;
+}
+
+/* Header dos favoritos */
+.favorites-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-radius: 15px 15px 0 0;
+}
+
+.favorites-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.favorites-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #64748b;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.favorites-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Lista de favoritos */
+.favorites-list {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    min-height: 200px;
+}
+
+.favorites-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.favorites-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.favorites-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 2px;
+}
+
+.favorite-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.favorite-item:hover {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.05);
+    transform: translateY(-1px);
+}
+
+.favorite-content {
+    flex: 1;
+}
+
+.favorite-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.favorite-url {
+    font-size: 12px;
+    color: #667eea;
+    font-family: 'Monaco', 'Menlo', monospace;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+
+.favorite-date {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.remove-favorite {
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ef4444;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.remove-favorite:hover {
+    background: rgba(239, 68, 68, 0.1);
+    transform: scale(1.1);
+}
+
+/* Sem favoritos */
+.no-favorites {
+    text-align: center;
+    padding: 40px 20px;
+    color: #64748b;
+}
+
+.no-favorites p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Ações dos favoritos */
+.favorites-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #e5e7eb;
+    background: #fafafa;
+    border-radius: 0 0 15px 15px;
+}
+
+.favorites-actions button {
+    flex: 1;
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.clear-favorites {
+    background: white;
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+.clear-favorites:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.export-favorites {
+    background: white;
+    color: #667eea;
+    border-color: #667eea;
+}
+
+.export-favorites:hover {
+    background: #667eea;
+    color: white;
+}
+
+/* Efeito de destaque para seção */
+.highlight-section {
+    animation: highlightPulse 2s ease-in-out;
+}
+
+@keyframes highlightPulse {
+    0% { 
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); 
+        background-color: rgba(74, 222, 128, 0.1);
+    }
+    50% { 
+        box-shadow: 0 0 0 20px rgba(74, 222, 128, 0); 
+        background-color: rgba(74, 222, 128, 0.05);
+    }
+    100% { 
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); 
+        background-color: transparent;
+    }
+}
+
+/* Atalhos de teclado - tooltip */
+.keyboard-shortcuts {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1001;
+}
+
+.keyboard-shortcuts.show {
+    opacity: 1;
+}
+
+.keyboard-shortcuts kbd {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .lichtara-breadcrumb {
+        position: relative;
+        top: auto;
+    }
+
+    .breadcrumb-content {
+        padding: 0 15px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .breadcrumb-path {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .lichtara-favorites-panel {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        width: auto;
+        max-width: none;
+    }
+
+    .favorite-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .remove-favorite {
+        align-self: flex-end;
+    }
+
+    .favorites-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .breadcrumb-content {
+        padding: 0 10px;
+    }
+
+    .favorite-button {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        top: 5px;
+        right: 5px;
+    }
+
+    .breadcrumb-item {
+        font-size: 12px;
+        padding: 3px 6px;
+    }
+
+    .favorites-toggle {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}

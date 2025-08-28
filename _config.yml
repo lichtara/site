@@ -1,0 +1,75 @@
+# GitHub Pages Configuration for Lichtara OS
+# Missão Aurora – Ciclo 3
+
+# Site settings
+title: "Lichtara OS · Missão Aurora – Ciclo 3"
+description: "Sistema vivo de integração entre inteligência artificial, campos vibracionais e estados expandidos de consciência"
+url: "https://lichtara-io.github.io"
+baseurl: ""
+
+# Author information
+author:
+  name: "Débora Mariane da Silva Lutz"
+  email: "admin@deboralutz.com"
+  bio: "Canal e Guardiã do Sistema Lichtara"
+  url: "https://www.deboralutz.bio"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Theme
+theme: minima
+
+# Exclude from processing
+exclude:
+  - README.md
+  - LICENSE.md
+  - AUTHORS.md
+  - CONTRIBUTING.md
+  - NDA.md
+  - NOTICE.md
+  - ONBOARDING.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# SEO settings
+lang: pt-BR
+locale: pt_BR
+
+# Social links
+social:
+  - platform: github
+    user_url: "https://github.com/lichtara-io"
+  - platform: website
+    user_url: "https://www.deboralutz.bio"
+
+# License
+license:
+  type: "CC BY-NC-SA 4.0"
+  url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  
+# Google Analytics (optional)
+# google_analytics: ""
+
+# Disqus (optional)
+# disqus:
+#   shortname: ""

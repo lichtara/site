@@ -1,0 +1,14 @@
+/
+├── index.html              # Página Inicial
+├── sobre.html              # Sobre / Missão / História
+├── licencas.html           # Lichtara License v1.0 e futuras
+├── publicacoes.html        # Manuais, Livros, Artigos
+├── tecnologias.html        # Protótipos, Integrações
+├── contato.html            # Contato e Colaboração
+├── agente.html             # Agente / AI Assistant
+├── assets/
+│   ├── imagens/            # Logos, diagramas, capas, fotos
+│   ├── pdf/                # PDFs da licença, manuais, etc
+│   ├── docs/               # Documentos auxiliares
+│   ├── css/                # Estilos globais e componentes
+│   ├── js/                 # Scripts do site/agente

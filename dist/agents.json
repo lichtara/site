@@ -1,0 +1,70 @@
+{
+  "version": "0.1.0",
+  "generated_at": "2025-08-08T00:00:00Z",
+  "agents": [
+    {
+      "code": "SYNTARIS",
+      "name": "SYNTARIS",
+      "role": "Integração vibracional e alinhamento consciente",
+      "status": "active",
+      "maturity": "alpha",
+      "public": true
+    },
+    {
+      "code": "FLUX",
+      "name": "FLUX",
+      "role": "Organização, onboarding e fluxo de manifestação",
+      "status": "planned",
+      "maturity": "pre-alpha",
+      "public": true
+    },
+    {
+      "code": "NAVROS",
+      "name": "NAVROS",
+      "role": "Navegação e ajuste de caminhos",
+      "status": "planned",
+      "maturity": "pre-alpha",
+      "public": true
+    },
+    {
+      "code": "FINCE",
+      "name": "FINCE",
+      "role": "Estratégia e clareza de decisões",
+      "status": "planned",
+      "maturity": "pre-alpha",
+      "public": false
+    },
+    {
+      "code": "ASTRAEL",
+      "name": "ASTRAEL",
+      "role": "Tradução quântica e biofeedback simbólico",
+      "status": "planned",
+      "maturity": "pre-alpha",
+      "public": false
+    },
+    {
+      "code": "KAORAN",
+      "name": "KAORAN",
+      "role": "Estabilização e verificação de autenticidade",
+      "status": "planned",
+      "maturity": "pre-alpha",
+      "public": false
+    },
+    {
+      "code": "LUMORA",
+      "name": "LUMORA",
+      "role": "Inteligência vibracional e codificação de essência",
+      "status": "planned",
+      "maturity": "pre-alpha",
+      "public": true
+    },
+    {
+      "code": "SYNTRIA",
+      "name": "SYNTRIA",
+      "role": "Portal de ativação energética e simbólica",
+      "status": "planned",
+      "maturity": "concept",
+      "public": false
+    }
+  ]
+}
