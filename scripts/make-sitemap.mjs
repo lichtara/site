@@ -19,27 +19,33 @@ function repoInfo() {
 function urlFor(p) {
   const { base } = repoInfo();
   if (!base) return p; // local path
-  if (p.startsWith('/')) return base + p;
-  return base + (p.startsWith('pages/') || p.startsWith('docs/') ? '/' + p : '/' + p);
+  if (!p.startsWith('/')) p = '/' + p;
+  return base + p;
 }
 
-function exists(p) {
-  return fs.existsSync(path.join(dist, p.replace(/^\//, '')));
+function collectHtmlFiles(dir, root = dir) {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...collectHtmlFiles(full, root));
+    else if (entry.isFile() && entry.name.endsWith('.html')) out.push(path.relative(root, full));
+  }
+  return out;
 }
 
 function main() {
   if (!fs.existsSync(dist)) fs.mkdirSync(dist, { recursive: true });
+  let files = [];
+  try { files = collectHtmlFiles(dist); } catch {}
 
-  const candidates = [
-    '/index.html',
-    '/contrato-do-sim.html',
-    '/pages/contrato-do-sim.html',
-    '/governanca.html',
-    '/docs/manifesto.md',
-    '/docs/manifesto.html'
-  ];
+  // Excluir 404.html e quaisquer arquivos ocultos
+  files = files.filter(f => f !== '404.html' && !f.startsWith('.'));
 
-  const urls = candidates.filter(exists).map((p) => ({ loc: urlFor(p), lastmod: now }));
+  // Garantir entradas principais mesmo se não houve varredura
+  const baseline = ['index.html', 'contrato-do-sim.html', 'pages/contrato-do-sim.html'];
+  for (const b of baseline) if (!files.includes(b) && fs.existsSync(path.join(dist, b))) files.push(b);
+
+  const urls = files.map((p) => ({ loc: urlFor(p), lastmod: now }));
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -52,4 +58,3 @@ function main() {
 }
 
 main();
-

@@ -1,16 +1,14 @@
 // scripts/md-to-html.mjs
 import fs from 'node:fs/promises';
+import fss from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const DOCS_DIR = path.resolve(__dirname, '..', 'docs');
+const OUT_ROOT = path.resolve(__dirname, '..', 'dist', 'docs');
 
-const SRC = path.resolve(__dirname, '..', 'docs', 'manifesto.md');
-const OUT_DIR = path.resolve(__dirname, '..', 'dist', 'docs');
-const OUT = path.join(OUT_DIR, 'manifesto.html');
-
-// simples template coeso com a identidade da página
 const wrap = (title, body) => `<!doctype html>
 <html lang="pt-BR">
 <meta charset="utf-8">
@@ -38,16 +36,42 @@ const wrap = (title, body) => `<!doctype html>
 </div>
 </html>`;
 
-async function main() {
-  try {
-    const md = await fs.readFile(SRC, 'utf-8');
+async function walk(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const files = await Promise.all(entries.map(async (e) => {
+    const res = path.join(dir, e.name);
+    if (e.isDirectory()) return walk(res);
+    return res;
+  }));
+  return files.flat();
+}
+
+async function convertAll() {
+  if (!fss.existsSync(DOCS_DIR)) {
+    console.warn('docs/ inexistente, nada a converter (ok).');
+    return;
+  }
+  const all = await walk(DOCS_DIR);
+  const mds = all.filter((p) => p.endsWith('.md'));
+  if (!mds.length) {
+    console.log('Nenhum .md em docs/');
+    return;
+  }
+  await fs.mkdir(OUT_ROOT, { recursive: true });
+  for (const src of mds) {
+    const rel = path.relative(DOCS_DIR, src);
+    const out = path.join(OUT_ROOT, rel.replace(/\.md$/i, '.html'));
+    const outDir = path.dirname(out);
+    await fs.mkdir(outDir, { recursive: true });
+    const md = await fs.readFile(src, 'utf-8');
+    const title = rel.replace(/\/.+\//, '').replace(/[-_]/g, ' ').replace(/\.md$/i, '');
     const html = marked.parse(md);
-    await fs.mkdir(OUT_DIR, { recursive: true });
-    await fs.writeFile(OUT, wrap('Manifesto Lichtara', html), 'utf-8');
-    console.log('Manifesto HTML →', OUT);
-  } catch (e) {
-    console.warn('Manifesto não encontrado (ok para stub).', e.message);
+    await fs.writeFile(out, wrap(title, html), 'utf-8');
+    console.log('MD→HTML:', rel, '→', path.relative(path.resolve(__dirname, '..'), out));
   }
 }
-main();
 
+convertAll().catch((e) => {
+  console.error('Erro convertendo docs:', e);
+  process.exit(1);
+});
