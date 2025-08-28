@@ -73,3 +73,35 @@ git push origin v1.0.0
 > - `dist/` não é versionado: é gerado a cada `npm run build` ou no CI.  
 > - Os scripts em `scripts/` cuidam de: conversão de Markdown → HTML, geração de PDF/PNG, sitemap e robots dinâmicos.  
 > - O fluxo de publicação sempre lê os arquivos em `pages/`, `assets/` e `docs/` para compor o `dist/`.  
+
+## Comandos Úteis
+
+```bash
+# Pré-visualizar o site localmente (http://localhost:4173)
+npm run dev
+
+# Build estático para dist/ (gera páginas, manifesto, sitemap, robots, etc.)
+npm run build
+
+# Gerar PDF cerimonial e PNG da insígnia (executa após build)
+npm run pdf
+
+# Converter manualmente Markdown → HTML (docs/ → dist/docs/)
+npm run md
+```
+
+---
+
+## Troubleshooting (GitHub Pages)
+
+- 404 no domínio customizado (CNAME):
+  Confirme em Settings → Pages que “Custom domain” está definido (ex.: `lichtara.com`) e que o DNS aponta corretamente.
+
+- Sitemap/robots não refletem domínio certo:
+  O build detecta automaticamente. Se mudar entre CNAME e subpath (`usuario.github.io/repo`), rode `npm run build` novamente.
+
+- Página em branco após deploy:
+  Verifique se os caminhos são relativos (`./`) e não absolutos (`/`). O workflow ajusta canonical/OG, mas links internos devem ser relativos.
+
+- PDF não aparece na Release:
+  Certifique-se de criar uma tag no formato `v*` (ex.: `v1.0.0`). Isso dispara o job que anexa `dist/contrato-do-sim.pdf`.
