@@ -28,4 +28,27 @@ Sitemap e Robots
 - `sitemap.xml` é gerado por `scripts/make-sitemap.mjs` após o build (postbuild).
 - `robots.txt` é gerado dinamicamente por `scripts/make-robots.mjs` com base em `CNAME` ou `GITHUB_REPOSITORY` (não manter um `robots.txt` estático no repositório).
 - Canonical e OG/Twitter do contrato são ajustados para o domínio/subpath correto por `scripts/fix-urls.mjs` no postbuild.
+
+## Publicação & Releases
+
+- Deploy (GitHub Pages): qualquer `push` na branch `main` dispara o workflow e publica o site em Pages.
+- Release com PDF: criar uma tag no formato `v*` (ex.: `v1.0.0`) dispara a criação de uma Release e anexa automaticamente `dist/contrato-do-sim.pdf`.
+
+### Exemplos
+
+```bash
+# publicar alterações no portal
+git add -A
+git commit -m "Atualiza Contrato do Sim e manifesto"
+git push origin main
+
+# criar uma release v1.0.0 com PDF anexo
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+> Observações:
+>
+> - O workflow gera `dist/contrato-do-sim.pdf` e `dist/assets/insignia.png` (1080×1080) durante `npm run pdf`.
+> - `sitemap.xml` e `robots.txt` são gerados dinamicamente no pós-build (CNAME ou subpath detectado automaticamente).
 # site
