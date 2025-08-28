@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     { "label": "serve", "type": "shell", "command": "npx live-server pages --port=4173", "problemMatcher": [] },
-    { "label": "build", "type": "shell", "command": "mkdir -p dist && cp -r pages assets dist/ && cp pages/contrato-do-sim.html dist/ && [ -f CNAME ] && cp CNAME dist/ || true", "problemMatcher": [] },
+    { "label": "build", "type": "shell", "command": "mkdir -p dist && cp -r pages assets dist/ && cp pages/contrato-do-sim.html dist/ && [ -f pages/index.html ] && cp pages/index.html dist/index.html || true && [ -d docs ] && cp -r docs dist/ || true && [ -f governanca.html ] && cp governanca.html dist/ || true && [ -f CNAME ] && cp CNAME dist/ || true && node scripts/make-sitemap.mjs", "problemMatcher": [] },
     { "label": "deploy", "type": "shell", "command": "npm run build && echo 'Deploy pronto via GitHub Actions (Pages)'", "problemMatcher": [] }
   ]
 }
