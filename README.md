@@ -51,7 +51,6 @@ git push origin v1.0.0
 >
 > - O workflow gera `dist/contrato-do-sim.pdf` e `dist/assets/insignia.png` (1080×1080) durante `npm run pdf`.
 > - `sitemap.xml` e `robots.txt` são gerados dinamicamente no pós-build (CNAME ou subpath detectado automaticamente).
-# site
 ## Estrutura do Repositório
 
 ```
