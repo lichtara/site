@@ -55,6 +55,7 @@ function patchPage(base, fileRel, canonicalPath) {
 
   const items = [
     { pattern: /<link rel="canonical"[^>]*>/i, tag: `<link rel="canonical" href="${canonical}">` },
+    { pattern: /<meta property="og:site_name"[^>]*>/i, tag: `<meta property="og:site_name" content="Lichtara">` },
     { pattern: /<meta property="og:type"[^>]*>/i, tag: `<meta property="og:type" content="website">` },
     { pattern: /<meta property="og:url"[^>]*>/i, tag: `<meta property="og:url" content="${canonical}">` },
     { pattern: /<meta property="og:title"[^>]*>/i, tag: `<meta property="og:title" content="${title}">` },

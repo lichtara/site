@@ -17,7 +17,7 @@ Uso local
 
 Deploy (GitHub Pages)
 - Push na `main` dispara o workflow
-- Workflow: copia `pages` e `assets` para `dist/`, inclui `CNAME` (se existir), gera `contrato-do-sim.pdf` e publica
+- Workflow: copia `assets` e páginas principais para `dist/`, inclui `CNAME` (se existir), gera `contrato-do-sim.pdf` e publica
 - Em Settings → Pages, confirme “Build and deployment → GitHub Actions”
 
 Rotas úteis
@@ -71,7 +71,7 @@ git push origin v1.0.0
 > Observações:
 > - `dist/` não é versionado: é gerado a cada `npm run build` ou no CI.  
 > - Os scripts em `scripts/` cuidam de: conversão de Markdown → HTML, geração de PDF/PNG, sitemap e robots dinâmicos.  
-> - O fluxo de publicação sempre lê os arquivos em `pages/`, `assets/` e `docs/` para compor o `dist/`.  
+> - O fluxo de publicação lê `assets/`, páginas principais de `pages/` e `docs/` para compor o `dist/`.  
 
 ## Comandos Úteis
 
