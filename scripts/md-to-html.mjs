@@ -34,6 +34,8 @@ const wrap = (title, body) => `<!doctype html>
     ${body}
   </article>
 </div>
+<!-- Widget do Guardião (produção) -->
+<script defer src="https://portal.lichtara.com/embed.js" data-title="Guardião do Portal" data-position="bottom-right"></script>
 </html>`;
 
 async function walk(dir) {
