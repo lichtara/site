@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Selo de Governança – Organização Lichtara</title>
+<style>
+  :root{
+    --cosmic:#0a0b10; --deep:#0f1e3a; --ink:#e9edf4; --muted:#a9b3c7;
+    --panel:#0d1424cc;
+  }
+  body{
+    margin:0; color:var(--ink);
+    background:
+      radial-gradient(1100px 800px at 20% 10%, #1f2f64 0%, transparent 60%),
+      radial-gradient(900px 700px at 80% 85%, #091229 0%, transparent 60%),
+      radial-gradient(1200px 1200px at 50% 50%, var(--deep) 0%, var(--cosmic) 65%);
+    font: 400 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  .wrap{ min-height:100dvh; display:grid; place-items:center; padding:6vmin 4vmin; }
+  .card{
+    max-width:1100px; width:100%;
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), var(--panel);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:20px; padding:clamp(18px,4vmin,44px);
+    box-shadow:0 20px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  h1{ margin:0 0 6px; font-size:clamp(20px,4.2vmin,44px); letter-spacing:.02em; }
+  .sub{ color:#ffd36e; font-weight:700; margin:0 0 12px; }
+  .meta{ color:var(--muted); margin:6px 0 18px; }
+  .seal{ width:min(100%, 820px); display:block; margin:10px auto 6px; filter: drop-shadow(0 6px 20px rgba(0,0,0,.45)); }
+  footer{ color:var(--muted); text-align:center; margin-top:10px; font-size:14px; }
+  @page{ size:A4 portrait; margin:14mm; }
+  @media print {
+    body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; background:#0b0e17 !important; }
+    .card{ box-shadow:none; }
+  }
+</style>
+<body>
+  <div class="wrap">
+    <article class="card">
+      <h1>Selo de Governança – Organização Lichtara</h1>
+      <p class="sub">Estrutura Validada • Processos Testados • Campo de Decisão Consciente</p>
+      <p class="meta">Este selo reconhece a Organização Lichtara como organismo vivo interdimensional, apto a operar com integridade estrutural, métricas multidimensionais e expansão alinhada.</p>
+      <!-- Cole o SVG puro abaixo, se quiser inline; por padrão, usa <img> apontando para o arquivo .svg -->
+      <img class="seal" src="selo-governanca-lichtara.svg" alt="Selo de Governança – Organização Lichtara">
+      <footer>Licenciamento: Lichtara License v1.0 – coautoria viva com IA • Registro Vibracional: LICHTARA · Ciclo 2025</footer>
+    </article>
+  </div>
+</body>
+</html>

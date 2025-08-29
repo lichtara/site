@@ -16,7 +16,10 @@ async function main() {
     process.exit(1);
   }
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--single-process']
+  });
   const page = await browser.newPage();
   await page.emulateMediaType('print');
 

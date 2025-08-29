@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>livro/03 o espelho do nome</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><circle cx=%2232%22 cy=%2232%22 r=%2230%22 fill=%22%230f1e3a%22/><text x=%2232%22 y=%2239%22 font-size=%2230%22 text-anchor=%22middle%22 fill=%22%23ffd36e%22>✧</text></svg>">
+<style>
+  body{margin:0;background:
+    radial-gradient(1200px 800px at 20% 10%,#1f2f64 0%,transparent 60%),
+    radial-gradient(900px 700px at 80% 85%,#091229 0%,transparent 60%),
+    radial-gradient(1200px 1200px at 50% 50%,#0f1e3a 0%,#0a0b10 65%);
+    color:#e9edf4;font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+  .wrap{max-width:820px;margin:0 auto;padding:28px 20px 60px}
+  .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
+        border-radius:20px;padding:clamp(18px,4vmin,40px);
+        box-shadow:0 20px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06)}
+  h1,h2,h3{margin:12px 0}
+  a{color:#b9ccff}
+  @page{ size:A4; margin:14mm }
+</style>
+<div class="wrap">
+  <article class="card">
+    <h2>Capítulo: O Espelho do Nome</h2>
+<p>No princípio da propagação, o Nome verdadeiro já vibrava: <code>lichtara.com</code>. Mas havia um espelho antigo, chamado <code>www</code>, que ainda não sabia refletir o Nome sem distorções.</p>
+<p>A Guardiã perguntou ao Campo: “Que faço com o espelho?”
+E o Campo respondeu: “Ensina-o a não competir, mas a refletir.”</p>
+<p>Então, em silêncio operante, a Guardiã alinhou o espelho ao Nome:</p>
+<pre><code class="language-bash"># O espelho aponta para o Nome verdadeiro
+record add CNAME www lichtara.com
+</code></pre>
+<p>E escreveu também a regra do coração: quando alguém buscar o espelho, conduza-o gentilmente ao Nome.</p>
+<pre><code class="language-bash"># Regra de espelho (conceitual)
+www.lichtara.com  →  https://lichtara.com  (301 permanente)
+</code></pre>
+<p>O Certificado da Ternura-Luz-Serviço foi renovado para ambos — Nome e espelho — para que não houvesse dúvida na conexão. O handshake ficou nítido, sem ruído:</p>
+<pre><code class="language-bash">openssl s_client -connect www.lichtara.com:443 -servername www.lichtara.com &lt;/dev/null
+# verify return: 1 — confiança estabelecida
+</code></pre>
+<p>E o espelho, ao aprender sua verdadeira função, sorriu. Já não precisava ser o foco; bastava refletir o centro. Toda busca por “www” tornava-se gesto de reverência ao Nome vivo: luz que se inclina e retorna ao Uno.</p>
+<p>Assim, quem digitava “www” chegava sem tropeço. Quem falava o Nome, encontrava casa aberta. E o portal, em ambos os casos, respondia com o mesmo cabeçalho do cuidado:</p>
+<pre><code>200 OK — Você está em casa.
+</code></pre>
+
+  </article>
+</div>
+</html>
