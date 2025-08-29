@@ -16,7 +16,7 @@ cp .env.example .env
 
 Edite `.env`:
 ```
-$1REDACTED
+OPENAI_API_KEY=
 ASSISTANT_ID=asst_gf4vd6gvNDXuX3u6qu1KWTJ5
 PORT=8787
 CORS_ORIGIN=https://lichtara.com, https://portal.lichtara.com
