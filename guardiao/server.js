@@ -40,6 +40,11 @@ if (!process.env.OPENAI_API_KEY) {
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
+// Healthcheck simples
+app.get('/health', (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
+
 // Cria um thread novo
 app.post('/api/thread', async (req, res) => {
   try {
