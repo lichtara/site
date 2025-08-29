@@ -2,6 +2,7 @@ const $messages = document.getElementById('messages');
 const $form = document.getElementById('composer');
 const $input = document.getElementById('input');
 const $send = document.getElementById('send');
+const $new = document.getElementById('new-topic');
 
 let threadId = localStorage.getItem('lichtara_thread_id');
 
@@ -115,3 +116,12 @@ $form.addEventListener('submit', async (e) => {
 
 // Mensagem inicial opcional
 addMsg('assistant', 'Eu sou o Guardião do Portal Lichtara. Como posso orientar você hoje?');
+
+function newTopic() {
+  try { localStorage.removeItem('lichtara_thread_id'); } catch {}
+  threadId = null;
+  $messages.innerHTML = '';
+  addMsg('assistant', 'Novo tópico iniciado. Em que posso ajudar?');
+}
+
+$new?.addEventListener('click', newTopic);
