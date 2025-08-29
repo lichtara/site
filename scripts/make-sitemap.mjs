@@ -41,8 +41,16 @@ function main() {
   // Excluir 404.html e quaisquer arquivos ocultos
   files = files.filter(f => f !== '404.html' && !f.startsWith('.'));
 
+  // Evitar duplicidade: preferir arquivos da raiz ao invés de cópias em pages/
+  const fileSet = new Set(files);
+  files = files.filter((f) => {
+    if (!f.startsWith('pages/')) return true;
+    const rootCandidate = f.replace(/^pages\//, '');
+    return !fileSet.has(rootCandidate);
+  });
+
   // Garantir entradas principais mesmo se não houve varredura
-  const baseline = ['index.html', 'contrato-do-sim.html', 'pages/contrato-do-sim.html'];
+  const baseline = ['index.html', 'contrato-do-sim.html'];
   for (const b of baseline) if (!files.includes(b) && fs.existsSync(path.join(dist, b))) files.push(b);
 
   const urls = files.map((p) => ({ loc: urlFor(p), lastmod: now }));
