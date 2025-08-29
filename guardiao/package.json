@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "start:prod": "NODE_ENV=production node server.js"
+    "start:prod": "NODE_ENV=production node server.js",
+    "check:security": "node scripts/check-security.mjs ${URL:-http://localhost:8787}"
   },
   "dependencies": {
     "cors": "^2.8.5",
