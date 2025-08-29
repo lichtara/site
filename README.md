@@ -28,6 +28,7 @@ Sitemap e Robots
 - `sitemap.xml` é gerado por `scripts/make-sitemap.mjs` após o build (postbuild) e evita duplicar caminhos de `pages/` quando existe versão na raiz.
 - `robots.txt` é gerado dinamicamente por `scripts/make-robots.mjs` com base em `CNAME` ou `GITHUB_REPOSITORY` (não manter um `robots.txt` estático no repositório).
 - Canonical e OG/Twitter (inclui og:type, og:title/description e twitter:title/description) são ajustados para páginas raiz e docs por `scripts/fix-urls.mjs` no postbuild.
+  - Você pode personalizar o `og:site_name` com a env `SITE_NAME` durante o build/deploy (ex.: `SITE_NAME="Campo Lichtara"`).
 
 ## Publicação & Releases
 
@@ -88,6 +89,9 @@ npm run pdf
 # Converter manualmente Markdown → HTML (docs/ → dist/docs/)
 npm run md
 ```
+
+Variáveis de ambiente úteis
+- `SITE_NAME`: define o valor de `og:site_name` injetado nas páginas.
 
 ---
 
