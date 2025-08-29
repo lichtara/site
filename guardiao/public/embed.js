@@ -32,7 +32,19 @@
   const bubble = document.createElement('button');
   bubble.className = `guardiao-bubble ${cfg.position}`;
   bubble.setAttribute('aria-label', 'Abrir Guardião do Portal');
-  bubble.innerHTML = '✧';
+  // Pequena insígnia dourada inline (SVG)
+  bubble.innerHTML = `
+    <svg width="28" height="28" viewBox="0 0 64 64" aria-hidden="true">
+      <defs>
+        <linearGradient id="guardiaoBubbleG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffe7a2"/>
+          <stop offset="50%" stop-color="#ffd36e"/>
+          <stop offset="100%" stop-color="#d4af37"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="28" fill="url(#guardiaoBubbleG)"/>
+      <text x="32" y="39" font-size="28" text-anchor="middle" fill="#0a0b10">✧</text>
+    </svg>`;
 
   const overlay = document.createElement('div');
   overlay.className = 'guardiao-overlay';
@@ -62,4 +74,3 @@
 
   window.GuardiaoWidget = { open, close };
 })();
-

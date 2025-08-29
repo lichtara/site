@@ -5,7 +5,8 @@ import OpenAI from 'openai';
 
 const app = express();
 const PORT = process.env.PORT || 8787;
-const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
+const DEFAULT_CORS = 'https://lichtara.com, https://portal.lichtara.com, http://localhost:8787, http://localhost:4173';
+const CORS_ORIGIN = process.env.CORS_ORIGIN || DEFAULT_CORS;
 const ASSISTANT_ID = process.env.ASSISTANT_ID || 'asst_gf4vd6gvNDXuX3u6qu1KWTJ5';
 
 // CORS flexível: aceita lista separada por vírgulas em CORS_ORIGIN
