@@ -114,6 +114,58 @@ app.get('/api/poll', async (req, res) => {
   }
 });
 
+// SSE: stream de status e mensagens até concluir
+app.get('/api/stream', async (req, res) => {
+  const { thread_id, run_id } = req.query || {};
+  if (!thread_id || !run_id) {
+    res.status(400).end();
+    return;
+  }
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders?.();
+
+  const sent = new Set();
+  let closed = false;
+  const send = (event, data) => {
+    if (closed) return;
+    res.write(`event: ${event}\n`);
+    res.write(`data: ${JSON.stringify(data)}\n\n`);
+  };
+
+  const timer = setInterval(async () => {
+    try {
+      const run = await openai.beta.threads.runs.retrieve(thread_id, run_id);
+      send('status', { status: run.status });
+      // enviar mensagens novas (mesmo em progresso, pode haver mensagens intermediárias futuramente)
+      const msgList = await openai.beta.threads.messages.list(thread_id, { order: 'asc' });
+      for (const m of msgList.data || []) {
+        if (sent.has(m.id)) continue;
+        const text = (m.content || [])
+          .map((c) => (c.type === 'text' ? c.text?.value : '[conteúdo não-texto]'))
+          .join('\n');
+        send('message', { id: m.id, role: m.role, content: text });
+        sent.add(m.id);
+      }
+      if (['completed','failed','cancelled','expired'].includes(run.status)) {
+        send('done', { status: run.status });
+        clearInterval(timer);
+        res.end();
+      }
+    } catch (err) {
+      send('error', { error: 'stream_error' });
+      clearInterval(timer);
+      res.end();
+    }
+  }, 900);
+
+  req.on('close', () => {
+    closed = true;
+    clearInterval(timer);
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`✅ Guardião do Portal rodando em http://localhost:${PORT}`);
 });
