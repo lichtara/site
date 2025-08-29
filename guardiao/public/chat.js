@@ -39,6 +39,42 @@ async function pollUntilDone(tid, rid) {
   }
 }
 
+function streamWithSSE(tid, rid) {
+  return new Promise((resolve, reject) => {
+    if (!('EventSource' in window)) return reject(new Error('SSE not supported'));
+
+    // Maintain a set of message ids to avoid duplicates
+    const seen = new Set();
+    const es = new EventSource(`/api/stream?thread_id=${encodeURIComponent(tid)}&run_id=${encodeURIComponent(rid)}`);
+    let finished = false;
+
+    es.addEventListener('message', (ev) => {
+      try {
+        const data = JSON.parse(ev.data || '{}');
+        if (!seen.has(data.id)) {
+          seen.add(data.id);
+          addMsg(data.role || 'assistant', data.content || '');
+        }
+      } catch {}
+    });
+    es.addEventListener('status', () => {});
+    es.addEventListener('error', () => {
+      if (!finished) reject(new Error('SSE error'));
+      es.close();
+    });
+    es.addEventListener('done', (ev) => {
+      finished = true;
+      try {
+        const data = JSON.parse(ev.data || '{}');
+        resolve(data);
+      } catch {
+        resolve({});
+      }
+      es.close();
+    });
+  });
+}
+
 $form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const text = $input.value.trim();
@@ -64,7 +100,11 @@ $form.addEventListener('submit', async (e) => {
     });
     if (!resRun.ok) throw new Error('Falha ao iniciar run');
     const { run_id } = await resRun.json();
-    await pollUntilDone(tid, run_id);
+    try {
+      await streamWithSSE(tid, run_id);
+    } catch {
+      await pollUntilDone(tid, run_id);
+    }
   } catch (err) {
     console.error(err);
     addMsg('assistant', '⚠️ Ocorreu um erro. Tente novamente.');
@@ -75,4 +115,3 @@ $form.addEventListener('submit', async (e) => {
 
 // Mensagem inicial opcional
 addMsg('assistant', 'Eu sou o Guardião do Portal Lichtara. Como posso orientar você hoje?');
-
