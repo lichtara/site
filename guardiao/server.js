@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
 import rateLimit from 'express-rate-limit';
+import morgan from 'morgan';
 
 const app = express();
 const PORT = process.env.PORT || 8787;
@@ -46,10 +47,14 @@ app.get('/health', (req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 
+// Logging (apenas rotas de API)
+app.use('/api', morgan(process.env.LOG_FORMAT || 'combined'));
+
 // Rate limiting básico (ajuste conforme demanda)
-const apiLimiter = rateLimit({ windowMs: 60 * 1000, max: 60, standardHeaders: true, legacyHeaders: false });
+const apiLimiter = rateLimit({ windowMs: 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false });
 const runLimiter = rateLimit({ windowMs: 60 * 1000, max: 20, standardHeaders: true, legacyHeaders: false });
 const streamLimiter = rateLimit({ windowMs: 60 * 1000, max: 30, standardHeaders: true, legacyHeaders: false });
+const msgLimiter = rateLimit({ windowMs: 60 * 1000, max: 60, standardHeaders: true, legacyHeaders: false });
 
 app.use('/api', apiLimiter);
 
@@ -65,7 +70,7 @@ app.post('/api/thread', async (req, res) => {
 });
 
 // Adiciona mensagem do usuário ao thread
-app.post('/api/message', async (req, res) => {
+app.post('/api/message', msgLimiter, async (req, res) => {
   try {
     const { thread_id, content } = req.body || {};
     if (!thread_id || !content) {
