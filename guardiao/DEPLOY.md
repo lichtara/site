@@ -81,3 +81,36 @@ Notas
 - O backend define CORS de forma restrita via `CORS_ORIGIN`.
 - Se usar Caddy/Traefik, mantenha `proxy_buffering off` (ou equivalente) e HTTP/1.1 para SSE.
 
+### Rate limiting (opcional, recomendado)
+
+No bloco `http {}` global do Nginx, adicione zonas:
+
+```
+limit_req_zone $binary_remote_addr zone=guardiao:10m rate=30r/m;
+limit_req_zone $binary_remote_addr zone=guardiao_run:10m rate=20r/m;
+```
+
+E no `server {}` de `portal.lichtara.com`, limite `/api/` e `/api/run`:
+
+```
+location /api/ {
+  proxy_pass http://127.0.0.1:8787;
+  proxy_http_version 1.1;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  limit_req zone=guardiao burst=15 nodelay;
+}
+
+location = /api/run {
+  proxy_pass http://127.0.0.1:8787;
+  proxy_http_version 1.1;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  limit_req zone=guardiao_run burst=10 nodelay;
+}
+```
+
