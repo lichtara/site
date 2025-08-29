@@ -4,7 +4,7 @@ Copyright (c) 2025 Debora Lutz
 
 Este projeto está licenciado sob a Lichtara License.
 Para detalhes completos da licença, visite:
-https://github.com/lichtara-io/license
+https://github.com/lichtara/license
 
 DOI da Licença: 10.5281/zenodo.16762058
 
