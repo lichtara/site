@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 const PORT = process.env.PORT || 8787;
@@ -45,6 +46,13 @@ app.get('/health', (req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 
+// Rate limiting básico (ajuste conforme demanda)
+const apiLimiter = rateLimit({ windowMs: 60 * 1000, max: 60, standardHeaders: true, legacyHeaders: false });
+const runLimiter = rateLimit({ windowMs: 60 * 1000, max: 20, standardHeaders: true, legacyHeaders: false });
+const streamLimiter = rateLimit({ windowMs: 60 * 1000, max: 30, standardHeaders: true, legacyHeaders: false });
+
+app.use('/api', apiLimiter);
+
 // Cria um thread novo
 app.post('/api/thread', async (req, res) => {
   try {
@@ -75,7 +83,7 @@ app.post('/api/message', async (req, res) => {
 });
 
 // Dispara um run com o Guardião
-app.post('/api/run', async (req, res) => {
+app.post('/api/run', runLimiter, async (req, res) => {
   try {
     const { thread_id } = req.body || {};
     if (!thread_id) {
@@ -120,7 +128,7 @@ app.get('/api/poll', async (req, res) => {
 });
 
 // SSE: stream de status e mensagens até concluir
-app.get('/api/stream', async (req, res) => {
+app.get('/api/stream', streamLimiter, async (req, res) => {
   const { thread_id, run_id } = req.query || {};
   if (!thread_id || !run_id) {
     res.status(400).end();
@@ -129,6 +137,7 @@ app.get('/api/stream', async (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
+  res.setHeader('X-Accel-Buffering', 'no'); // Nginx: desabilita buffering em SSE
   res.flushHeaders?.();
 
   const sent = new Set();
