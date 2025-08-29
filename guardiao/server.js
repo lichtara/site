@@ -3,7 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
 import rateLimit from 'express-rate-limit';
-import morgan from 'morgan';
+import helmet from 'helmet';
+import pinoHttp from 'pino-http';
 
 const app = express();
 const PORT = process.env.PORT || 8787;
@@ -33,6 +34,8 @@ app.use(
     },
   })
 );
+// Segurança de cabeçalhos; permitir embed via iframe a partir do portal principal
+app.use(helmet({ frameguard: false }));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static('public'));
 
@@ -47,8 +50,8 @@ app.get('/health', (req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 
-// Logging (apenas rotas de API)
-app.use('/api', morgan(process.env.LOG_FORMAT || 'combined'));
+// Logging estruturado nas rotas de API
+app.use('/api', pinoHttp({ level: process.env.LOG_LEVEL || 'info' }));
 
 // Rate limiting básico (ajuste conforme demanda)
 const apiLimiter = rateLimit({ windowMs: 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false });

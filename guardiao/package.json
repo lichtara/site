@@ -3,7 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "start": "node server.js",
+    "start:prod": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -11,6 +13,8 @@
     "express": "^4.19.2",
     "openai": "^4.56.0",
     "express-rate-limit": "^7.1.5",
-    "morgan": "^1.10.0"
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "pino-http": "^10.0.0"
   }
 }
