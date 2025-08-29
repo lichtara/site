@@ -3,12 +3,15 @@ import express from 'express';
 import cors from 'cors';
 import OpenAI from 'openai';
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import pinoHttp from 'pino-http';
 
 const app = express();
 const PORT = process.env.PORT || 8787;
 const DEFAULT_CORS = 'https://lichtara.com, https://portal.lichtara.com, http://localhost:8787, http://localhost:4173';
 const CORS_ORIGIN = process.env.CORS_ORIGIN || DEFAULT_CORS;
 const ASSISTANT_ID = process.env.ASSISTANT_ID || 'asst_gf4vd6gvNDXuX3u6qu1KWTJ5';
+const FRAME_ANCESTORS = (process.env.FRAME_ANCESTORS || 'https://lichtara.com https://*.lichtara.com').split(/[,\s]+/).filter(Boolean);
 
 // CORS flexível: aceita lista separada por vírgulas em CORS_ORIGIN
 const origins = (CORS_ORIGIN || '*')
@@ -32,6 +35,41 @@ app.use(
     },
   })
 );
+// Segurança de cabeçalhos; CSP com frame-ancestors controlando quem pode embutir o chat
+app.use(
+  helmet({
+    // frameguard enabled by default; CSP frame-ancestors also set below
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        frameAncestors: FRAME_ANCESTORS,
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+  })
+);
+
+// Referrer-Policy conservador
+app.use(helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' }));
+
+// Permissions-Policy (desabilita APIs não usadas)
+app.use((req, res, next) => {
+  res.setHeader(
+    'Permissions-Policy',
+    [
+      'accelerometer=()','autoplay=()','camera=()','clipboard-read=()','clipboard-write=()',
+      'encrypted-media=()','geolocation=()','gyroscope=()','magnetometer=()','microphone=()',
+      'midi=()','payment=()','picture-in-picture=()','publickey-credentials-get=()','usb=()',
+      'screen-wake-lock=()','xr-spatial-tracking=()','browsing-topics=()','fullscreen=(self)'
+    ].join(', ')
+  );
+  next();
+});
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static('public'));
 
@@ -46,10 +84,36 @@ app.get('/health', (req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 
-// Rate limiting básico (ajuste conforme demanda)
-const apiLimiter = rateLimit({ windowMs: 60 * 1000, max: 60, standardHeaders: true, legacyHeaders: false });
-const runLimiter = rateLimit({ windowMs: 60 * 1000, max: 20, standardHeaders: true, legacyHeaders: false });
-const streamLimiter = rateLimit({ windowMs: 60 * 1000, max: 30, standardHeaders: true, legacyHeaders: false });
+// Logging estruturado nas rotas de API (pretty em dev)
+const pretty = process.env.NODE_ENV !== 'production' && process.stdout.isTTY;
+app.use(
+  '/api',
+  pinoHttp(
+    pretty
+      ? {
+          level: process.env.LOG_LEVEL || 'info',
+          transport: {
+            target: 'pino-pretty',
+            options: { colorize: true, singleLine: true, translateTime: 'SYS:standard' },
+          },
+        }
+      : { level: process.env.LOG_LEVEL || 'info' }
+  )
+);
+
+// Rate limiting básico (ajuste por env)
+const num = (k, d) => {
+  const v = parseInt(process.env[k] || '', 10);
+  return Number.isFinite(v) && v > 0 ? v : d;
+};
+const ms = (k, d) => {
+  const v = parseInt(process.env[k] || '', 10);
+  return Number.isFinite(v) && v > 0 ? v : d;
+};
+const apiLimiter = rateLimit({ windowMs: ms('API_WINDOW_MS', 60_000), max: num('API_RATE', 100), standardHeaders: true, legacyHeaders: false });
+const runLimiter = rateLimit({ windowMs: ms('RUN_WINDOW_MS', 60_000), max: num('RUN_RATE', 20), standardHeaders: true, legacyHeaders: false });
+const streamLimiter = rateLimit({ windowMs: ms('STREAM_WINDOW_MS', 60_000), max: num('STREAM_RATE', 30), standardHeaders: true, legacyHeaders: false });
+const msgLimiter = rateLimit({ windowMs: ms('MSG_WINDOW_MS', 60_000), max: num('MSG_RATE', 60), standardHeaders: true, legacyHeaders: false });
 
 app.use('/api', apiLimiter);
 
@@ -65,7 +129,7 @@ app.post('/api/thread', async (req, res) => {
 });
 
 // Adiciona mensagem do usuário ao thread
-app.post('/api/message', async (req, res) => {
+app.post('/api/message', msgLimiter, async (req, res) => {
   try {
     const { thread_id, content } = req.body || {};
     if (!thread_id || !content) {
