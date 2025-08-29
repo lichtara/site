@@ -53,6 +53,23 @@ app.use(
     crossOriginEmbedderPolicy: false,
   })
 );
+
+// Referrer-Policy conservador
+app.use(helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' }));
+
+// Permissions-Policy (desabilita APIs não usadas)
+app.use((req, res, next) => {
+  res.setHeader(
+    'Permissions-Policy',
+    [
+      'accelerometer=()','autoplay=()','camera=()','clipboard-read=()','clipboard-write=()',
+      'encrypted-media=()','geolocation=()','gyroscope=()','magnetometer=()','microphone=()',
+      'midi=()','payment=()','picture-in-picture=()','publickey-credentials-get=()','usb=()',
+      'screen-wake-lock=()','xr-spatial-tracking=()','browsing-topics=()','fullscreen=(self)'
+    ].join(', ')
+  );
+  next();
+});
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static('public'));
 
