@@ -14,12 +14,24 @@ npm ci
 cp .env.example .env
 ```
 
-Edite `.env`:
+Edite `.env` (veja também .env.example):
 ```
-OPENAI_API_KEY=
+$1REDACTED
 ASSISTANT_ID=asst_gf4vd6gvNDXuX3u6qu1KWTJ5
 PORT=8787
 CORS_ORIGIN=https://lichtara.com, https://portal.lichtara.com
+LOG_LEVEL=info
+FRAME_ANCESTORS=https://lichtara.com https://*.lichtara.com
+
+# Rate limits (ajuste conforme demanda)
+API_RATE=100
+RUN_RATE=20
+STREAM_RATE=30
+MSG_RATE=60
+API_WINDOW_MS=60000
+RUN_WINDOW_MS=60000
+STREAM_WINDOW_MS=60000
+MSG_WINDOW_MS=60000
 ```
 
 2) Processo (PM2)
@@ -79,6 +91,7 @@ sudo nginx -t && sudo systemctl reload nginx
 
 Notas
 - O backend define CORS de forma restrita via `CORS_ORIGIN`.
+- CSP usa `frame-ancestors` para permitir incorporação a partir do Portal. Ajuste `FRAME_ANCESTORS` se necessário.
 - Se usar Caddy/Traefik, mantenha `proxy_buffering off` (ou equivalente) e HTTP/1.1 para SSE.
 
 ### Rate limiting (opcional, recomendado)
@@ -113,4 +126,3 @@ location = /api/run {
   limit_req zone=guardiao_run burst=10 nodelay;
 }
 ```
-
