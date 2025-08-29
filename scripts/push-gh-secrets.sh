@@ -113,31 +113,22 @@ detect_repo() {
   fi
 }
 
-load_env_values() {
-  if [[ ! -f "$env_file" ]]; then
-    echo "Error: .env file not found at: $env_file" >&2
-    exit 1
+get_env_value() {
+  local key="$1"
+  local line value
+  line=$(grep -E "^${key}=" "$env_file" | tail -n 1 || true)
+  if [[ -z "$line" ]]; then
+    printf ''
+    return 0
   fi
-  declare -gA VALS=()
-  while IFS= read -r line || [[ -n "$line" ]]; do
-    # Skip comments and empty
-    [[ "$line" =~ ^[[:space:]]*# ]] && continue
-    [[ -z "${line//[[:space:]]/}" ]] && continue
-    # Strip optional 'export '
-    line="${line#export }"
-    if [[ "$line" =~ ^[[:space:]]*([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*=(.*)$ ]]; then
-      local name="${BASH_REMATCH[1]}"
-      local value="${BASH_REMATCH[2]}"
-      # Trim surrounding whitespace
-      value="${value#${value%%[![:space:]]*}}"
-      value="${value%${value##*[![:space:]]}}"
-      # Remove surrounding quotes if both ends match
-      if { [[ "$value" == \"*\" && "$value" == *\" ]]; } || { [[ "$value" == \'*\' && "$value" == *\' ]]; }; then
-        value="${value:1:${#value}-2}"
-      fi
-      VALS["$name"]="$value"
-    fi
-  done < "$env_file"
+  value="${line#*=}"
+  # Trim surrounding quotes if present
+  if [[ ${#value} -ge 2 && "${value:0:1}" == '"' && "${value: -1}" == '"' ]]; then
+    value="${value:1:${#value}-2}"
+  elif [[ ${#value} -ge 2 && "${value:0:1}" == "'" && "${value: -1}" == "'" ]]; then
+    value="${value:1:${#value}-2}"
+  fi
+  printf '%s' "$value"
 }
 
 set_secret() {
@@ -186,7 +177,6 @@ main() {
   parse_args "$@"
   require_gh
   detect_repo || true
-  load_env_values
 
   # Determine which keys to use
   local keys_to_use=()
@@ -199,7 +189,8 @@ main() {
   # Count not-empty
   local found_any=0
   for k in "${keys_to_use[@]}"; do
-    local v="${VALS[$k]:-}"
+    local v
+    v=$(get_env_value "$k")
     if [[ -n "$v" ]]; then
       found_any=1; break
     fi
@@ -217,7 +208,8 @@ main() {
   fi
 
   for k in "${keys_to_use[@]}"; do
-    local v="${VALS[$k]:-}"
+    local v
+    v=$(get_env_value "$k")
     if [[ -n "$v" ]]; then
       echo "Setting secret: $k"
       set_secret "$k" "$v"
@@ -230,4 +222,3 @@ main() {
 }
 
 main "$@"
-
