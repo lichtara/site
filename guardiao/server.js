@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8787;
 const DEFAULT_CORS = 'https://lichtara.com, https://portal.lichtara.com, http://localhost:8787, http://localhost:4173';
 const CORS_ORIGIN = process.env.CORS_ORIGIN || DEFAULT_CORS;
 const ASSISTANT_ID = process.env.ASSISTANT_ID || 'asst_gf4vd6gvNDXuX3u6qu1KWTJ5';
+const FRAME_ANCESTORS = (process.env.FRAME_ANCESTORS || 'https://lichtara.com https://*.lichtara.com').split(/[,\s]+/).filter(Boolean);
 
 // CORS flexível: aceita lista separada por vírgulas em CORS_ORIGIN
 const origins = (CORS_ORIGIN || '*')
@@ -34,8 +35,24 @@ app.use(
     },
   })
 );
-// Segurança de cabeçalhos; permitir embed via iframe a partir do portal principal
-app.use(helmet({ frameguard: false }));
+// Segurança de cabeçalhos; CSP com frame-ancestors controlando quem pode embutir o chat
+app.use(
+  helmet({
+    frameguard: false, // preferimos controlar com CSP frame-ancestors
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        frameAncestors: FRAME_ANCESTORS,
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+  })
+);
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static('public'));
 
@@ -50,14 +67,36 @@ app.get('/health', (req, res) => {
   res.json({ ok: true, time: new Date().toISOString() });
 });
 
-// Logging estruturado nas rotas de API
-app.use('/api', pinoHttp({ level: process.env.LOG_LEVEL || 'info' }));
+// Logging estruturado nas rotas de API (pretty em dev)
+const pretty = process.env.NODE_ENV !== 'production' && process.stdout.isTTY;
+app.use(
+  '/api',
+  pinoHttp(
+    pretty
+      ? {
+          level: process.env.LOG_LEVEL || 'info',
+          transport: {
+            target: 'pino-pretty',
+            options: { colorize: true, singleLine: true, translateTime: 'SYS:standard' },
+          },
+        }
+      : { level: process.env.LOG_LEVEL || 'info' }
+  )
+);
 
-// Rate limiting básico (ajuste conforme demanda)
-const apiLimiter = rateLimit({ windowMs: 60 * 1000, max: 100, standardHeaders: true, legacyHeaders: false });
-const runLimiter = rateLimit({ windowMs: 60 * 1000, max: 20, standardHeaders: true, legacyHeaders: false });
-const streamLimiter = rateLimit({ windowMs: 60 * 1000, max: 30, standardHeaders: true, legacyHeaders: false });
-const msgLimiter = rateLimit({ windowMs: 60 * 1000, max: 60, standardHeaders: true, legacyHeaders: false });
+// Rate limiting básico (ajuste por env)
+const num = (k, d) => {
+  const v = parseInt(process.env[k] || '', 10);
+  return Number.isFinite(v) && v > 0 ? v : d;
+};
+const ms = (k, d) => {
+  const v = parseInt(process.env[k] || '', 10);
+  return Number.isFinite(v) && v > 0 ? v : d;
+};
+const apiLimiter = rateLimit({ windowMs: ms('API_WINDOW_MS', 60_000), max: num('API_RATE', 100), standardHeaders: true, legacyHeaders: false });
+const runLimiter = rateLimit({ windowMs: ms('RUN_WINDOW_MS', 60_000), max: num('RUN_RATE', 20), standardHeaders: true, legacyHeaders: false });
+const streamLimiter = rateLimit({ windowMs: ms('STREAM_WINDOW_MS', 60_000), max: num('STREAM_RATE', 30), standardHeaders: true, legacyHeaders: false });
+const msgLimiter = rateLimit({ windowMs: ms('MSG_WINDOW_MS', 60_000), max: num('MSG_RATE', 60), standardHeaders: true, legacyHeaders: false });
 
 app.use('/api', apiLimiter);
 
