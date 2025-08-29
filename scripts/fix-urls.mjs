@@ -15,24 +15,35 @@ function repoBase() {
   return '';
 }
 
-function patchContract(base) {
-  const file = path.join(dist, 'contrato-do-sim.html');
-  if (!fs.existsSync(file)) return;
+function insertTagFlex(html, tag) {
+  if (/<head>/i.test(html)) return html.replace(/<head>/i, `<head>\n  ${tag}`);
+  if (/{% head %}/i.test(html)) return html.replace(/{% head %}/i, `{% head %}\n  ${tag}`);
+  if (/<\/title>/i.test(html)) return html.replace(/<\/title>/i, `</title>\n  ${tag}`);
+  if (/<meta [^>]*charset/i.test(html)) return html.replace(/<meta [^>]*charset[^>]*>/i, (m) => `${m}\n  ${tag}`);
+  return `${tag}\n${html}`;
+}
+
+function patchPage(base, fileRel, canonicalPath) {
+  const file = path.join(dist, fileRel);
+  if (!fs.existsSync(file)) return false;
   let html = fs.readFileSync(file, 'utf8');
-  const canonical = `${base}/contrato-do-sim.html`;
+  const canonical = canonicalPath.startsWith('/') ? `${base}${canonicalPath}` : `${base}/${canonicalPath}`;
   const image = `${base}/assets/insignia.png`;
-  const replacements = [
+
+  const items = [
     { pattern: /<link rel="canonical"[^>]*>/i, tag: `<link rel="canonical" href="${canonical}">` },
     { pattern: /<meta property="og:url"[^>]*>/i, tag: `<meta property="og:url" content="${canonical}">` },
     { pattern: /<meta property="og:image"[^>]*>/i, tag: `<meta property="og:image" content="${image}">` },
-    { pattern: /<meta name="twitter:image"[^>]*>/i, tag: `<meta name="twitter:image" content="${image}">` }
+    { pattern: /<meta name="twitter:image"[^>]*>/i, tag: `<meta name="twitter:image" content="${image}">` },
+    { pattern: /<meta name="twitter:card"[^>]*>/i, tag: `<meta name="twitter:card" content="summary_large_image">` }
   ];
-  for (const { pattern, tag } of replacements) {
+  for (const { pattern, tag } of items) {
     if (pattern.test(html)) html = html.replace(pattern, tag);
-    else html = html.replace(/<head>/i, `<head>\n  ${tag}`);
+    else html = insertTagFlex(html, tag);
   }
   fs.writeFileSync(file, html);
-  console.log('🔗 URLs fixadas no contrato →', canonical);
+  console.log(`🔗 URLs fixadas → ${fileRel} → ${canonical}`);
+  return true;
 }
 
 function main() {
@@ -41,8 +52,14 @@ function main() {
     console.warn('Base URL não determinada (build local). Pulando fix-urls.');
     return;
   }
-  patchContract(base);
+  const pages = [
+    { file: 'contrato-do-sim.html', path: '/contrato-do-sim.html' },
+    { file: 'index.html', path: '/index.html' },
+    { file: 'governanca.html', path: '/governanca.html' },
+    { file: 'formacao.html', path: '/formacao.html' },
+    { file: 'organizacao.html', path: '/organizacao.html' }
+  ];
+  for (const p of pages) patchPage(base, p.file, p.path);
 }
 
 main();
-
