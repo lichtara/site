@@ -46,7 +46,20 @@
       <h1>Selo de Governança – Organização Lichtara</h1>
       <p class="sub">Estrutura Validada • Processos Testados • Campo de Decisão Consciente</p>
       <p class="meta">Este selo reconhece a Organização Lichtara como organismo vivo interdimensional, apto a operar com integridade estrutural, métricas multidimensionais e expansão alinhada.</p>
-      <img class="seal" src="selo-governanca-lichtara.svg" alt="Selo de Governança – Organização Lichtara">
+      <!-- Selo inline para evitar paths quebrados em Pages/subpaths -->
+      <svg class="seal" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Selo de Governança – Organização Lichtara">
+        <defs>
+          <radialGradient id="g" cx="50%" cy="45%" r="60%">
+            <stop offset="0%" stop-color="#ffe7a2"/>
+            <stop offset="55%" stop-color="#ffd36e"/>
+            <stop offset="100%" stop-color="#d4af37"/>
+          </radialGradient>
+        </defs>
+        <circle cx="256" cy="256" r="200" fill="url(#g)"/>
+        <circle cx="256" cy="256" r="188" fill="none" stroke="#8a6b15" stroke-width="6" opacity=".8"/>
+        <text x="256" y="238" text-anchor="middle" font-size="44" font-weight="700" fill="#0a0b10">GOVERNANÇA</text>
+        <text x="256" y="286" text-anchor="middle" font-size="18" fill="#0a0b10" opacity=".85">Estrutura • Processo • Integridade</text>
+      </svg>
       <div class="actions">
         <a class="btn" href="./contrato-do-sim.html">⟡ Contrato do Sim</a>
         <a class="btn" href="./index.html">⟡ Portal</a>
@@ -56,4 +69,3 @@
   </div>
 </body>
 </html>
-
