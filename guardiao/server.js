@@ -8,7 +8,28 @@ const PORT = process.env.PORT || 8787;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || '*';
 const ASSISTANT_ID = process.env.ASSISTANT_ID || 'asst_gf4vd6gvNDXuX3u6qu1KWTJ5';
 
-app.use(cors({ origin: CORS_ORIGIN }));
+// CORS flexível: aceita lista separada por vírgulas em CORS_ORIGIN
+const origins = (CORS_ORIGIN || '*')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true); // same-origin or curl
+      if (origins.includes('*')) return cb(null, true);
+      if (origins.includes(origin)) return cb(null, true);
+      // allow subdomains if pattern like https://*.lichtara.com is used
+      const wildcard = origins.find((o) => o.includes('*'));
+      if (wildcard) {
+        const re = new RegExp('^' + wildcard.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace('\\*', '.*') + '$');
+        if (re.test(origin)) return cb(null, true);
+      }
+      return cb(new Error('CORS: Origin not allowed'));
+    },
+  })
+);
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static('public'));
 
@@ -95,4 +116,3 @@ app.get('/api/poll', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`✅ Guardião do Portal rodando em http://localhost:${PORT}`);
 });
-
