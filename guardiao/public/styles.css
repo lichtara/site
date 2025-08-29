@@ -1,12 +1,25 @@
-body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background:#0a0a0b; color:#e5e5e7; }
-.wrap { max-width: 800px; margin: 0 auto; padding: 24px; }
-#chat { border: 1px solid #2a2a2e; border-radius: 16px; padding: 16px; background: #0f0f12; }
+:root{
+  --bg1:#0a0b10; --bg2:#0f1e3a; --ink:#e9edf4; --muted:#a9b3c7;
+  --gold1:#ffe7a2; --gold2:#ffd36e; --gold3:#d4af37; --panel: #0d1424cc;
+}
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; background:
+  radial-gradient(1100px 800px at 20% 10%, #1f2f64 0%, transparent 60%),
+  radial-gradient(900px 700px at 80% 85%, #091229 0%, transparent 60%),
+  radial-gradient(1200px 1200px at 50% 50%, var(--bg2) 0%, var(--bg1) 65%);
+  color:var(--ink); }
+.wrap { max-width: 860px; margin: 0 auto; padding: 28px 20px 40px; }
+#chat { border: 1px solid rgba(255,255,255,.18); border-radius: 16px; padding: 16px; background:
+  linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)), var(--panel);
+  box-shadow:0 20px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
+}
 #messages { display: flex; flex-direction: column; gap: 12px; min-height: 300px; padding: 8px; }
-.msg { padding: 12px 14px; border-radius: 12px; max-width: 80%; white-space: pre-wrap; line-height: 1.35; }
-.user { align-self: flex-end; background: #1e1e25; border: 1px solid #2b2b33; }
-.assistant { align-self: flex-start; background: #111118; border: 1px solid #252530; }
+.msg { padding: 12px 14px; border-radius: 12px; max-width: 80%; white-space: pre-wrap; line-height: 1.5; }
+.user { align-self: flex-end; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); }
+.assistant { align-self: flex-start; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.16); }
 #composer { margin-top: 12px; display: flex; gap: 8px; }
-#input { flex: 1; padding: 12px 14px; border-radius: 10px; border: 1px solid #2a2a2e; background:#0c0c10; color:#e5e5e7; }
-#send { padding: 12px 16px; border-radius: 10px; border: 1px solid #2a2a2e; background:#16161c; color:#e5e5e7; cursor: pointer; }
+#input { flex: 1; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); color:var(--ink); }
+#send { padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.10); color:var(--ink); cursor: pointer; }
+#send:hover{ background: rgba(255,255,255,.16) }
 #send[disabled] { opacity: .6; cursor: not-allowed; }
+h1{ margin:0 0 8px; font-size: clamp(22px,4.8vmin,36px); letter-spacing:.02em }
 
