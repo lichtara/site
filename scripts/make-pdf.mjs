@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 async function main() {
   const distDir = path.resolve(__dirname, '..', 'dist');
-  const htmlPath = path.join(distDir, 'pages', 'contrato-do-sim.html');
+  const htmlPath = path.join(distDir, 'contrato-do-sim.html');
   const pdfPath = path.join(distDir, 'contrato-do-sim.pdf');
 
   if (!fs.existsSync(htmlPath)) {

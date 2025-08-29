@@ -46,6 +46,12 @@ async function walk(dir) {
   return files.flat();
 }
 
+function extractTitleFromHTML(html) {
+  const m = /<h1[^>]*>([\s\S]*?)<\/h1>/i.exec(html) || /<h2[^>]*>([\s\S]*?)<\/h2>/i.exec(html);
+  if (!m) return '';
+  return m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 async function convertAll() {
   if (!fss.existsSync(DOCS_DIR)) {
     console.warn('docs/ inexistente, nada a converter (ok).');
@@ -66,7 +72,8 @@ async function convertAll() {
     const md = await fs.readFile(src, 'utf-8');
     const title = rel.replace(/\/.+\//, '').replace(/[-_]/g, ' ').replace(/\.md$/i, '');
     const html = marked.parse(md);
-    await fs.writeFile(out, wrap(title, html), 'utf-8');
+    const derived = extractTitleFromHTML(html) || title;
+    await fs.writeFile(out, wrap(derived, html), 'utf-8');
     console.log('MD→HTML:', rel, '→', path.relative(path.resolve(__dirname, '..'), out));
   }
 }

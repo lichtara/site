@@ -21,13 +21,13 @@ Deploy (GitHub Pages)
 - Em Settings → Pages, confirme “Build and deployment → GitHub Actions”
 
 Rotas úteis
-- Página: `/pages/contrato-do-sim.html` → publicado como `https://<user>.github.io/<repo>/pages/contrato-do-sim.html`
-- Dica: adicione um `pages/index.html` se quiser uma home com links
+- Página: `/contrato-do-sim.html` → publicado como `https://<user>.github.io/<repo>/contrato-do-sim.html`
+- Dica: adicione um `pages/index.html` (publicado como `/index.html`) se quiser uma home com links
 
 Sitemap e Robots
-- `sitemap.xml` é gerado por `scripts/make-sitemap.mjs` após o build (postbuild).
+- `sitemap.xml` é gerado por `scripts/make-sitemap.mjs` após o build (postbuild) e evita duplicar caminhos de `pages/` quando existe versão na raiz.
 - `robots.txt` é gerado dinamicamente por `scripts/make-robots.mjs` com base em `CNAME` ou `GITHUB_REPOSITORY` (não manter um `robots.txt` estático no repositório).
-- Canonical e OG/Twitter do contrato são ajustados para o domínio/subpath correto por `scripts/fix-urls.mjs` no postbuild.
+- Canonical e OG/Twitter (inclui og:type, og:title/description e twitter:title/description) são ajustados para páginas raiz e docs por `scripts/fix-urls.mjs` no postbuild.
 
 ## Publicação & Releases
 

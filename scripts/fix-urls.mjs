@@ -55,12 +55,15 @@ function patchPage(base, fileRel, canonicalPath) {
 
   const items = [
     { pattern: /<link rel="canonical"[^>]*>/i, tag: `<link rel="canonical" href="${canonical}">` },
+    { pattern: /<meta property="og:type"[^>]*>/i, tag: `<meta property="og:type" content="website">` },
     { pattern: /<meta property="og:url"[^>]*>/i, tag: `<meta property="og:url" content="${canonical}">` },
     { pattern: /<meta property="og:title"[^>]*>/i, tag: `<meta property="og:title" content="${title}">` },
     { pattern: /<meta property="og:description"[^>]*>/i, tag: `<meta property="og:description" content="${desc}">` },
     { pattern: /<meta property="og:image"[^>]*>/i, tag: `<meta property="og:image" content="${image}">` },
-    { pattern: /<meta name="twitter:image"[^>]*>/i, tag: `<meta name="twitter:image" content="${image}">` },
-    { pattern: /<meta name="twitter:card"[^>]*>/i, tag: `<meta name="twitter:card" content="summary_large_image">` }
+    { pattern: /<meta name="twitter:card"[^>]*>/i, tag: `<meta name="twitter:card" content="summary_large_image">` },
+    { pattern: /<meta name="twitter:title"[^>]*>/i, tag: `<meta name="twitter:title" content="${title}">` },
+    { pattern: /<meta name="twitter:description"[^>]*>/i, tag: `<meta name="twitter:description" content="${desc}">` },
+    { pattern: /<meta name="twitter:image"[^>]*>/i, tag: `<meta name="twitter:image" content="${image}">` }
   ];
   for (const { pattern, tag } of items) {
     if (pattern.test(html)) html = html.replace(pattern, tag);
