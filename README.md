@@ -93,6 +93,33 @@ npm run md
 Variáveis de ambiente úteis
 - `SITE_NAME`: define o valor de `og:site_name` injetado nas páginas.
 
+## Guardião do Portal (Assistants API)
+
+Um chat minimal com o Guardião (Assistants API) está em `guardiao/` para rodar separadamente do site estático.
+
+Passos:
+
+1) Crie `guardiao/.env` a partir de `guardiao/.env.example` e preencha `OPENAI_API_KEY` (e opcionalmente `ASSISTANT_ID`, `CORS_ORIGIN`).
+2) Instale deps e rode localmente:
+
+```bash
+cd guardiao
+npm install
+npm run dev
+# abre http://localhost:8787
+```
+
+Endpoints expostos (backend):
+- `POST /api/thread` → cria thread
+- `POST /api/message` → `{ thread_id, content }`
+- `POST /api/run` → `{ thread_id }` (usa `ASSISTANT_ID`)
+- `GET /api/poll?thread_id=...&run_id=...` → status e histórico
+
+Front (estático):
+- servido em `guardiao/public/` (página do chat em `/`).
+
+Observação: GitHub Pages não executa Node/Express. Publique o backend em um servidor/serviço próprio e linke a página do chat a partir do portal, ou incorpore via iframe/modal.
+
 ---
 
 ## Troubleshooting (GitHub Pages)
