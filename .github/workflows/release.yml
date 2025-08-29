@@ -12,6 +12,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SITE_NAME: Lichtara
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -67,4 +69,3 @@ jobs:
           asset_path: dist/assets/insignia.png
           asset_name: insignia.png
           asset_content_type: image/png
-
