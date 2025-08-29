@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "npx live-server pages --port=4173",
-    "build": "mkdir -p dist && cp -r pages assets dist/ && cp pages/contrato-do-sim.html dist/ && [ -f pages/index.html ] && cp pages/index.html dist/index.html || true && [ -d docs ] && cp -r docs dist/ || true && [ -f pages/governanca.html ] && cp pages/governanca.html dist/governanca.html || true && [ -f CNAME ] && cp CNAME dist/ || true && [ -f 404.html ] && cp 404.html dist/ || true",
+    "build": "mkdir -p dist && cp -r pages assets dist/ && cp pages/contrato-do-sim.html dist/ && [ -f pages/index.html ] && cp pages/index.html dist/index.html || true && [ -d docs ] && cp -r docs dist/ || true && [ -f pages/governanca.html ] && cp pages/governanca.html dist/governanca.html || true && [ -f pages/formacao.html ] && cp pages/formacao.html dist/formacao.html || true && [ -f pages/organizacao.html ] && cp pages/organizacao.html dist/organizacao.html || true && [ -f CNAME ] && cp CNAME dist/ || true && [ -f 404.html ] && cp 404.html dist/ || true",
     "pdf": "node scripts/make-pdf.mjs && node scripts/render-insignia.mjs",
     "md": "node scripts/md-to-html.mjs",
     "postbuild": "npm run md && node scripts/make-sitemap.mjs && node scripts/make-robots.mjs && node scripts/fix-urls.mjs",
