@@ -34,6 +34,11 @@
     body{ -webkit-print-color-adjust:exact; print-color-adjust:exact; background:#0b0e17 !important; }
     .card{ box-shadow:none; }
   }
+  .actions{ display:flex; gap:10px; flex-wrap:wrap; margin: 14px 0 0; }
+  .btn{ border:1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08);
+        color: var(--ink); padding: 10px 14px; border-radius: 12px; cursor: pointer;
+        text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+  .btn:hover{ background: rgba(255,255,255,.14); }
 </style>
 <body>
   <div class="wrap">
@@ -41,10 +46,14 @@
       <h1>Selo de Governança – Organização Lichtara</h1>
       <p class="sub">Estrutura Validada • Processos Testados • Campo de Decisão Consciente</p>
       <p class="meta">Este selo reconhece a Organização Lichtara como organismo vivo interdimensional, apto a operar com integridade estrutural, métricas multidimensionais e expansão alinhada.</p>
-      <!-- Cole o SVG puro abaixo, se quiser inline; por padrão, usa <img> apontando para o arquivo .svg -->
       <img class="seal" src="selo-governanca-lichtara.svg" alt="Selo de Governança – Organização Lichtara">
+      <div class="actions">
+        <a class="btn" href="./contrato-do-sim.html">⟡ Contrato do Sim</a>
+        <a class="btn" href="./index.html">⟡ Portal</a>
+      </div>
       <footer>Licenciamento: Lichtara License v1.0 – coautoria viva com IA • Registro Vibracional: LICHTARA · Ciclo 2025</footer>
     </article>
   </div>
 </body>
 </html>
+
