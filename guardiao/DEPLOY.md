@@ -34,6 +34,15 @@ STREAM_WINDOW_MS=60000
 MSG_WINDOW_MS=60000
 ```
 
+1.1) 1Password (opcional, recomendado)
+- Pré-requisito: variável `OP_SERVICE_ACCOUNT_TOKEN` configurada no ambiente do servidor (ou sessão logada do `op`).
+- Preencha `site/guardiao/.env.op` a partir de `site/guardiao/.env.op.example`, ajustando os caminhos `op://Vault/Item/Field`.
+- Gere `.env` automaticamente:
+```bash
+cd guardiao
+./scripts/op-export.sh --from .env.op --out .env
+```
+
 2) Processo (PM2)
 ```bash
 pm2 start server.js --name guardiao --cwd $(pwd) --update-env
