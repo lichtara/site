@@ -17,7 +17,7 @@ cp .env.example .env
 Edite `.env` (veja também .env.example):
 ```
 $1REDACTED
-ASSISTANT_ID=asst_gf4vd6gvNDXuX3u6qu1KWTJ5
+ASSISTANT_ID=your-assistant-id-here
 PORT=8787
 CORS_ORIGIN=https://lichtara.com, https://portal.lichtara.com
 LOG_LEVEL=info
