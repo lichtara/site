@@ -134,3 +134,35 @@ location = /api/run {
   limit_req zone=guardiao_run burst=10 nodelay;
 }
 ```
+
+## Segurança (recomendado)
+
+1) Nunca commitar segredos reais
+- Use `guardiao/.env.example` como base e mantenha apenas placeholders.
+- Gere `.env` a partir de cofres (1Password opcional) e garanta `.env` no `.gitignore` (já configurado).
+
+2) 1Password (opcional)
+- Preencha `guardiao/.env.op` baseando-se em `guardiao/.env.op.example` (formato `op://Vault/Item/Field`).
+- Exporte `.env` automaticamente:
+```
+cd guardiao
+./scripts/op-export.sh --from .env.op --out .env
+```
+
+3) Varredura de segredos (local)
+- Instale o hook de pre-commit e rode o scanner manualmente quando quiser:
+```
+git config core.hooksPath .githooks
+scripts/scan-secrets.sh
+```
+- O hook usa `gitleaks protect --staged` com configuração em `.gitleaks.toml`.
+
+4) CI — proteção no repositório
+- Já há workflow: `.github/workflows/secret-scan.yml` (Gitleaks) em `push` e `PR`.
+- Em GitHub → Settings → Security, habilite (se disponível):
+  - Secret scanning e Push Protection
+  - Branch protection para `main` (exigir status checks + reviews)
+
+5) Rotação de credenciais (se detectar vazamento)
+- Revogar/imediatamente rotacionar: OpenAI, Stripe, Google, Notion, HF, GitHub PAT, NPM, Terraform, Sentry.
+- Reescrever histórico com `git filter-repo`/`filter-branch`, forçar push e notificar a equipe para resetar locais (`git reset --hard`).

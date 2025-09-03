@@ -2,3 +2,9 @@ dist/
 node_modules/
 .DS_Store
 .env
+# Harden secret ignores
+.env.*
+*.env
+!.env.example
+!guardiao/.env.example
+!guardiao/.env.op.example

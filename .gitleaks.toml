@@ -1,0 +1,29 @@
+# Gitleaks configuration for Lichtara site
+# Docs: https://github.com/gitleaks/gitleaks
+
+[extend]
+# Start from gitleaks default rules
+useDefault = true
+
+[allowlist]
+# Allow typical non-secret test placeholders and local urls
+regexes = [
+  '''(?i)your-.*-key-here''',
+  '''localhost(:\d+)?''',
+  '''example\.com'''
+]
+
+[[rules]]
+id = "lichtara-op-template"
+# Allow 1Password op:// template refs
+regex = '''op://[A-Za-z0-9 _\-/]+/[A-Za-z0-9 _\-/]+/[A-Za-z0-9 _\-/]+'''
+allow = true
+
+[[rules]]
+id = "lichtara-assistant-id"
+# Do not treat generic assistant ids as secrets in docs/examples
+regex = '''\bassist(?:ant)?_[A-Za-z0-9]{8,}'''
+entropy = 0.0
+path = '''(DEPLOY\.md|\.env\.example|\.md)$'''
+allow = true
+

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Pre-commit secret scan using gitleaks
+set -euo pipefail
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "[pre-commit] Installing gitleaks locally..." >&2
+  curl -sSfL https://raw.githubusercontent.com/gitleaks/gitleaks/master/install.sh | bash -s -- -b "$(git rev-parse --show-toplevel)/.bin"
+  export PATH="$(git rev-parse --show-toplevel)/.bin:$PATH"
+fi
+
+echo "[pre-commit] Running gitleaks protect on staged changes..."
+gitleaks protect --staged --redact --config .gitleaks.toml
+
