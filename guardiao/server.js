@@ -38,7 +38,7 @@ app.use(
 // Segurança de cabeçalhos; CSP com frame-ancestors controlando quem pode embutir o chat
 app.use(
   helmet({
-    frameguard: false, // preferimos controlar com CSP frame-ancestors
+    // frameguard enabled by default; CSP frame-ancestors also set below
     contentSecurityPolicy: {
       useDefaults: true,
       directives: {
