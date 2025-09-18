@@ -1,8 +1,38 @@
 {
   "version": "2.0.0",
   "tasks": [
-    { "label": "serve", "type": "shell", "command": "npx live-server pages --port=4173", "problemMatcher": [] },
-    { "label": "build", "type": "shell", "command": "npm run build", "problemMatcher": [] },
-    { "label": "deploy", "type": "shell", "command": "npm run build && echo 'Deploy pronto via GitHub Actions (Pages)'", "problemMatcher": [] }
+    {
+      "label": "serve",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use 20.19.4 >/dev/null; npx live-server pages --port=4173"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use 20.19.4 >/dev/null; npm run build"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "deploy",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\" && nvm use 20.19.4 >/dev/null; npm run build && echo 'Deploy pronto via GitHub Actions (Pages)'"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
   ]
 }
