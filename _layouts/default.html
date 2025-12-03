@@ -6,25 +6,22 @@
   <title>{{ page.title | default: site.title }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #050710;
-      --panel: rgba(255, 255, 255, 0.04);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #e8ecf7;
-      --muted: #a4adc4;
-      --accent: #f0c14f;
-      --accent-2: #2ad4ff;
+      --bg: #0A1A2F; /* azul profundo */
+      --surface: #000814; /* preto cosmico */
+      --border: rgba(201, 210, 217, 0.18); /* prateado vibrante */
+      --text: #F5F6F7; /* off-white tecnico */
+      --muted: #C9D2D9; /* prateado vibrante */
+      --accent: #D4AF37; /* dourado ativador */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
-      background: radial-gradient(circle at 15% 20%, rgba(42, 212, 255, 0.14), transparent 35%),
-                  radial-gradient(circle at 82% 12%, rgba(240, 193, 79, 0.12), transparent 34%),
-                  linear-gradient(135deg, var(--bg), #070b16 60%, #05070f 100%);
+      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       line-height: 1.7;
@@ -36,12 +33,11 @@
     main {
       width: 100%;
       max-width: 860px;
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 32px 28px;
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(8px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
     }
 
     .eyebrow {
@@ -53,29 +49,30 @@
     }
 
     h1, h2, h3, h4, h5 {
+      font-family: 'Cormorant Garamond', 'Times New Roman', serif;
       font-weight: 600;
       line-height: 1.2;
       color: var(--text);
     }
 
-    h1 { font-size: clamp(32px, 4vw, 44px); margin-bottom: 18px; }
+    h1 { font-size: clamp(32px, 4vw, 44px); margin-bottom: 18px; letter-spacing: 0.01em; }
     h2 { font-size: clamp(22px, 3vw, 28px); margin: 28px 0 12px; }
     h3 { font-size: 19px; margin: 20px 0 10px; }
 
-    p { margin: 10px 0; color: #d6dced; font-size: 17px; }
+    p { margin: 10px 0; color: var(--muted); font-size: 17px; }
 
     strong { color: var(--text); }
 
-    a { color: var(--accent-2); text-decoration: none; border-bottom: 1px solid rgba(42, 212, 255, 0.4); padding-bottom: 1px; }
-    a:hover { color: #8de9ff; border-color: rgba(141, 233, 255, 0.8); }
+    a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(212, 175, 55, 0.6); padding-bottom: 1px; }
+    a:hover { color: #f2d061; border-color: rgba(242, 208, 97, 0.9); }
 
     ul { margin: 12px 0 12px 20px; display: grid; gap: 12px; }
-    li { color: #d6dced; font-size: 16px; }
+    li { color: var(--muted); font-size: 16px; }
 
     hr {
       border: none;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
       margin: 28px 0;
     }
 
