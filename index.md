@@ -21,9 +21,9 @@ Um laboratório de presença, pesquisa e criação, dedicado à investigação d
 
 Aqui, tratamos o sistema como um organismo - vivo, interligado e em evolução.
 
+---
 
-
-## ✧ Os três pilares
+### Os três pilares
 
 
 **Ciência da Consciência**  
