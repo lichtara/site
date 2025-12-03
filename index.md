@@ -21,19 +21,25 @@ Um laboratório de presença, pesquisa e criação, dedicado à investigação d
 
 Aqui, tratamos o sistema como um organismo - vivo, interligado e em evolução.
 
+
+
 ### Os três pilares
+
 
 **Ciência da Consciência**  
 
 Estudos e metodologias que exploram a consciência como campo estruturante da realidade.
 
+
 **Comunidades Sistêmicas**  
 
 Novas formas de viver, aprender e cocriar em coerência com o Campo.
 
+
 **Práticas Vibracionais**  
 
 Tecnologias internas e externas que refinam presença e ressonância.
+
 
 ---
 
