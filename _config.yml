@@ -1,0 +1,15 @@
+# Site metadata
+name: Lichtara Institute
+title: Lichtara Institute
+description: Landing page for lichtara.com
+url: "https://lichtara.com"
+baseurl: ""
+lang: pt
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+exclude:
+  - README.md
+
+# No theme to keep full control over layout
