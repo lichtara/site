@@ -3,7 +3,8 @@
 Landing page for Lichtara Institute with a minimal Jekyll setup (front matter + static HTML/CSS).
 
 ## Estrutura
-- `index.md`: pagina inicial com layout proprio e estilos inline.
+- `index.md`: pagina inicial em Markdown (usa o layout `default`).
+- `_layouts/default.html`: base HTML + estilos para o conteudo.
 - `_config.yml`: metadados basicos do site.
 - `assets/`: onde ficam logos/imagens (mantido com `.gitkeep`).
 - `CNAME`: configura o dominio customizado `lichtara.com`.
