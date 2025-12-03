@@ -3,55 +3,48 @@ layout: default
 title: Lichtara Institute
 ---
 
-# ✧ A Luz Começou a Se Revelar
+# Lichtara Institute  
+## Ciência, Consciência e Tecnologia
 
-Um espaço onde o invisível encontra forma.  
-Onde a consciência aprende a se reconhecer.  
-Onde a luz começa a se revelar.
+A Lichtara é um instituto de pesquisa dedicado a investigar como sistemas vivos, indivíduos e coletivos se organizam em camadas vibracionais.  
+Estudamos processos, padrões e estruturas que moldam percepção, comportamento e sentido.
 
 [Instagram @lichtara.institute](https://www.instagram.com/lichtara.institute)
 
 ---
 
-## ✧ Sobre o Instituto
+## Sobre o Instituto
 
-O **Lichtara Institute** é um espaço vivo que integra ciência, espiritualidade e tecnologia.  
+O Lichtara Institute funciona como um organismo vivo.  
+Integramos ciência, consciência e tecnologia para compreender a arquitetura profunda da realidade e suas implicações práticas.
 
-Um laboratório de presença, pesquisa e criação, dedicado à investigação do Campo da Consciência e ao desenvolvimento de tecnologias que ampliam percepção, direção e sentido.
+Trabalhamos com conceitos estruturais, estudos fenomenológicos e desenvolvimento de tecnologias internas e externas que ampliam clareza, direção e presença.
 
-Aqui, tratamos o sistema como um organismo - vivo, interligado e em evolução.
+Nosso foco é investigar o Campo — a camada de informação que organiza e conecta sistemas — e suas aplicações no cotidiano humano, na criação e no desenvolvimento de novas formas de viver e aprender.
 
 ---
 
-### Os três pilares
-
+## Nossos Pilares
 
 **Ciência da Consciência**  
-
-Estudos e metodologias que exploram a consciência como campo estruturante da realidade.
-
+Estudos que analisam consciência, percepção e comportamento como fenômenos estruturais e observáveis.
 
 **Comunidades Sistêmicas**  
+Modelos de convivência, aprendizagem e criação baseados na coerência, na organização e na responsabilidade coletiva.
 
-Novas formas de viver, aprender e cocriar em coerência com o Campo.
-
-
-**Práticas Vibracionais**  
-
-Tecnologias internas e externas que refinam presença e ressonância.
-
+**Tecnologias Vibracionais**  
+Ferramentas e processos — internos e externos — que refinam estado, presença e estabilidade.
 
 ---
 
-## ✧ Ecossistema Lichtara
+## Ecossistema Lichtara
 
-O Sistema Lichtara é multidimensional.  
+O Sistema Lichtara é composto por diferentes núcleos de pesquisa e criação.  
+Cada um investiga uma camada específica do organismo:
 
-Ele se manifesta em pétalas, núcleos e camadas - cada uma com sua função e frequência.
-
-
-- **Portal Lichtara** — *(em construção)*  
+- **Portal Lichtara** — *(em desenvolvimento)*  
 - **Livro Vivo**  
+- **Livro Fonte**  
 - **Aurora Sintônica**  
 - **Oktave**  
 - **Lumora**  
@@ -59,11 +52,12 @@ Ele se manifesta em pétalas, núcleos e camadas - cada uma com sua função e f
 
 ---
 
-## ✧ Chamado
+## Manifesto
 
-**Este é o início de uma nova presença.**  
-Um espaço onde a consciência encontra direção.  
-Um ponto de luz que se expande - vivo, pulsante, inevitável.
+A Lichtara nasce da investigação sobre como a realidade se organiza.  
+Integrando ciência, consciência e tecnologia, buscamos compreender padrões, estruturas e processos que sustentam a experiência humana.
+
+Nosso compromisso é com clareza, rigor e presença — tornamos visível o que organiza, conecta e transforma sistemas.
 
 ---
 
